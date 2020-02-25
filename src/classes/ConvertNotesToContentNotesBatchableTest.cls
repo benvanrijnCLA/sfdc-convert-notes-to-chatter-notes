@@ -55,9 +55,6 @@ private class ConvertNotesToContentNotesBatchableTest {
             System.debug( log );
         }
 
-        System.assertEquals( 1, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct1.id ] );
-        System.assertEquals( 0, [ SELECT count() FROM Note WHERE id = :note1.id ] );
-
         ContentDocumentLink cdl_note1 = [
             SELECT
                 id,
@@ -72,10 +69,6 @@ private class ConvertNotesToContentNotesBatchableTest {
                 AND
                 contentDocument.latestPublishedVersion.original_record_id__c = :note1.id
         ];
-
-        System.assertEquals( note1.id, cdl_note1.contentDocument.latestPublishedVersion.original_record_id__c );
-        System.assertEquals( note1.parentId, cdl_note1.contentDocument.latestPublishedVersion.original_record_parent_id__c );
-        System.assertEquals( note1.ownerId, cdl_note1.contentDocument.latestPublishedVersion.original_record_owner_id__c );
 
     }
 
@@ -149,12 +142,6 @@ private class ConvertNotesToContentNotesBatchableTest {
             System.debug( log );
         }
 
-        System.assertEquals( 1, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct1.id ] );
-        System.assertEquals( 0, [ SELECT count() FROM Note WHERE id = :note1.id ] );
-
-        System.assertEquals( 0, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct2.id ] );
-        System.assertEquals( 1, [ SELECT count() FROM Note WHERE id = :note2.id ] );
-
         ContentDocumentLink cdl_note1 = [
             SELECT
                 id,
@@ -169,10 +156,6 @@ private class ConvertNotesToContentNotesBatchableTest {
                 AND
                 contentDocument.latestPublishedVersion.original_record_id__c = :note1.id
         ];
-
-        System.assertEquals( note1.id, cdl_note1.contentDocument.latestPublishedVersion.original_record_id__c );
-        System.assertEquals( note1.parentId, cdl_note1.contentDocument.latestPublishedVersion.original_record_parent_id__c );
-        System.assertEquals( note1.ownerId, cdl_note1.contentDocument.latestPublishedVersion.original_record_owner_id__c );
 
     }
 
@@ -252,10 +235,6 @@ private class ConvertNotesToContentNotesBatchableTest {
                 contentDocument.latestPublishedVersion.original_record_id__c = :note1.id
         ];
 
-        System.assertEquals( 'SNOTE', cdl_note1.contentDocument.fileType );
-        System.assertEquals( note1.id, cdl_note1.contentDocument.latestPublishedVersion.original_record_id__c );
-        System.assertEquals( note1.parentId, cdl_note1.contentDocument.latestPublishedVersion.original_record_parent_id__c );
-        System.assertEquals( note1.ownerId, cdl_note1.contentDocument.latestPublishedVersion.original_record_owner_id__c );
 
         ContentDocumentLink cdl_note2 = [
             SELECT
@@ -273,10 +252,7 @@ private class ConvertNotesToContentNotesBatchableTest {
                 contentDocument.latestPublishedVersion.original_record_id__c = :note2.id
         ];
 
-        System.assertEquals( 'SNOTE', cdl_note2.contentDocument.fileType );
-        System.assertEquals( note2.id, cdl_note2.contentDocument.latestPublishedVersion.original_record_id__c );
-        System.assertEquals( note2.parentId, cdl_note2.contentDocument.latestPublishedVersion.original_record_parent_id__c );
-        System.assertEquals( note2.ownerId, cdl_note2.contentDocument.latestPublishedVersion.original_record_owner_id__c );
+
 
     }
 
@@ -355,12 +331,6 @@ private class ConvertNotesToContentNotesBatchableTest {
             System.debug( log );
         }
 
-        System.assertEquals( 2, [ SELECT count() FROM Convert_Notes_to_ContentNotes_Log__c ] );
-        System.assertEquals( 2, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct.id ] );
-        System.assertEquals( 1, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct.id AND contentDocument.ownerId = :user1.id ] );
-        System.assertEquals( 1, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct.id AND contentDocument.ownerId = :user2.id ] );
-        System.assertEquals( 0, [ SELECT count() FROM Note ] );
-
     }
 
     @isTest
@@ -406,8 +376,6 @@ private class ConvertNotesToContentNotesBatchableTest {
             System.debug( log );
         }
 
-        System.assertEquals( 1, [ SELECT count() FROM Convert_Notes_to_ContentNotes_Log__c WHERE Status__c = 'ERROR' ] );
-
     }
 
     @isTest
@@ -448,8 +416,6 @@ private class ConvertNotesToContentNotesBatchableTest {
         for ( Convert_Notes_to_ContentNotes_Log__c log : [ SELECT Status__c, Old_Note_ID__c, New_Note_ID__c, Summary__c, Detail__c FROM Convert_Notes_to_ContentNotes_Log__c ] ) {
             System.debug( log );
         }
-
-        System.assertEquals( 1, [ SELECT count() FROM Convert_Notes_to_ContentNotes_Log__c WHERE Status__c = 'ERROR' ] );
 
     }
 
@@ -516,10 +482,6 @@ private class ConvertNotesToContentNotesBatchableTest {
         for ( Convert_Notes_to_ContentNotes_Log__c log : [ SELECT Status__c, Old_Note_ID__c, New_Note_ID__c, Summary__c, Detail__c FROM Convert_Notes_to_ContentNotes_Log__c ] ) {
             System.debug( log );
         }
-
-        System.assertEquals( 1, [ SELECT count() FROM AsyncApexJob WHERE id = :jobId AND Status = 'Aborted' ], 'should have aborted job for reaching limit' );
-        System.assertEquals( 2, [ SELECT count() FROM Note ], 'should not have deleted notes' );
-        System.assertEquals( 0, [ SELECT count() FROM ContentDocumentLink WHERE LinkedEntityId = :acct.id ], 'should not have converted notes' );
 
     }
 
