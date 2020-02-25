@@ -15,7 +15,7 @@ private class ConvertNotesToContentNotesServiceTest {
 
         UserRole role = [ SELECT id FROM UserRole WHERE parentRoleId = null AND portalType = 'None' LIMIT 1 ];
 
-        Profile p = [ SELECT id FROM Profile WHERE name = 'Standard User' ];
+        Profile p = [ SELECT id FROM Profile WHERE name = 'System Administrator' ];
 
         User user1, user2;
 
