@@ -13,7 +13,7 @@ private class ConvertNotesToContentNotesBatchableTest {
 
         upsert settings;
 
-        Profile p = [ SELECT id FROM Profile WHERE name = 'Standard User' ];
+        Profile p = [ SELECT id FROM Profile WHERE name = 'System Administrator' ];
 
         User user1, user2;
 
