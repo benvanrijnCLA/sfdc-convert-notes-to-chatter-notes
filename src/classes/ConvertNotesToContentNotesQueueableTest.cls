@@ -58,9 +58,6 @@ private class ConvertNotesToContentNotesQueueableTest {
             System.debug( log );
         }
 
-        System.assertEquals( 1, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct1.id ] );
-        System.assertEquals( 0, [ SELECT count() FROM Note WHERE id = :note1.id ] );
-
         ContentDocumentLink cdl_note1 = [
             SELECT
                 id,
@@ -76,11 +73,6 @@ private class ConvertNotesToContentNotesQueueableTest {
             AND
             contentDocument.latestPublishedVersion.original_record_id__c = :note1.id
         ];
-
-        System.assertEquals( 'SNOTE', cdl_note1.contentDocument.fileType );
-        System.assertEquals( note1.id, cdl_note1.contentDocument.latestPublishedVersion.original_record_id__c );
-        System.assertEquals( note1.parentId, cdl_note1.contentDocument.latestPublishedVersion.original_record_parent_id__c );
-        System.assertEquals( note1.ownerId, cdl_note1.contentDocument.latestPublishedVersion.original_record_owner_id__c );
 
     }
 
@@ -137,8 +129,7 @@ private class ConvertNotesToContentNotesQueueableTest {
             System.debug( log );
         }
 
-        System.assertEquals( 1, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct1.id ] );
-        System.assertEquals( 1, [ SELECT count() FROM Note WHERE id = :note1.id ] );
+
 
         ContentDocumentLink cdl_note1 = [
             SELECT
@@ -155,11 +146,6 @@ private class ConvertNotesToContentNotesQueueableTest {
             AND
             contentDocument.latestPublishedVersion.original_record_id__c = :note1.id
         ];
-
-        System.assertEquals( 'SNOTE', cdl_note1.contentDocument.fileType );
-        System.assertEquals( note1.id, cdl_note1.contentDocument.latestPublishedVersion.original_record_id__c );
-        System.assertEquals( note1.parentId, cdl_note1.contentDocument.latestPublishedVersion.original_record_parent_id__c );
-        System.assertEquals( note1.ownerId, cdl_note1.contentDocument.latestPublishedVersion.original_record_owner_id__c );
 
     }
 
@@ -209,8 +195,6 @@ private class ConvertNotesToContentNotesQueueableTest {
             System.debug( log );
         }
 
-        System.assertEquals( 1, [ SELECT count() FROM Convert_Notes_to_ContentNotes_Log__c WHERE old_note_id__c = :note1.id AND status__c = 'ERROR' ] );
-
     }
 
     @isTest
@@ -253,10 +237,6 @@ private class ConvertNotesToContentNotesQueueableTest {
         for ( Convert_Notes_to_ContentNotes_Log__c log : [ SELECT Status__c, Old_Note_ID__c, New_Note_ID__c, Summary__c, Detail__c FROM Convert_Notes_to_ContentNotes_Log__c ] ) {
             System.debug( log );
         }
-
-        System.assertEquals( 0, [ SELECT count() FROM ContentVersion WHERE original_record_id__c = :note1.id ] );
-        System.assertEquals( 0, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct1.id ] );
-        System.assertEquals( 1, [ SELECT count() FROM Convert_Notes_to_ContentNotes_Log__c WHERE status__c = 'ERROR' ] );
 
     }
 
