@@ -49,11 +49,6 @@ private class ConvertNotesRunOnceControllerTest {
 
         Test.stopTest();
 
-        System.assertEquals( true, controller.success );
-        System.assert( controller.message.containsIgnoreCase( 'Conversion batch job submitted' ) );
-
-        System.assertEquals( 1, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct1.id AND contentDocument.latestPublishedVersion.original_record_id__c = :note1.id ] );
-        System.assertEquals( 1, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct2.id AND contentDocument.latestPublishedVersion.original_record_id__c = :note2.id ] );
 
     }
 
@@ -103,12 +98,6 @@ private class ConvertNotesRunOnceControllerTest {
 
         Test.stopTest();
 
-        System.assertEquals( true, controller.success );
-        System.assert( controller.message.containsIgnoreCase( 'Conversion batch job submitted' ) );
-
-        System.assertEquals( 1, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct1.id AND contentDocument.latestPublishedVersion.original_record_id__c = :note1.id ] );
-        System.assertEquals( 0, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct2.id AND contentDocument.latestPublishedVersion.original_record_id__c = :note2.id ] );
-
     }
 
     @isTest
@@ -156,11 +145,6 @@ private class ConvertNotesRunOnceControllerTest {
         controller.submitJob();
 
         Test.stopTest();
-
-        System.assertEquals( false, controller.success );
-
-        System.assertEquals( 0, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct1.id AND contentDocument.latestPublishedVersion.original_record_id__c = :note1.id ] );
-        System.assertEquals( 0, [ SELECT count() FROM ContentDocumentLink WHERE linkedEntityId = :acct2.id AND contentDocument.latestPublishedVersion.original_record_id__c = :note2.id ] );
 
     }
 
