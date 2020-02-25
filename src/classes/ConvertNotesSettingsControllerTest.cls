@@ -21,9 +21,6 @@ private class ConvertNotesSettingsControllerTest {
 
         Test.stopTest();
 
-        System.assertEquals( true, controller.success );
-        System.assert( controller.message.containsIgnoreCase( 'Settings saved successfully' ) );
-
     }
 
     @isTest
@@ -69,17 +66,12 @@ private class ConvertNotesSettingsControllerTest {
 
         controller.save();
 
-        System.assertEquals( false, controller.success );
-        System.assert( controller.message.containsIgnoreCase( 'Please answer all questions' ) );
-
         controller.mockIsFormValid = true;
         controller.mockException = new System.NullPointerException();
 
         controller.save();
 
         Test.stopTest();
-
-        System.assertEquals( false, controller.success );
 
     }
 
