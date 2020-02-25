@@ -123,11 +123,10 @@ private class ConvertNotesToContentNotesServiceTest {
 
         Test.stopTest();
 
-        System.assertNotEquals( null, results );
+
 
         for ( ConvertNotesToContentNotesService.ConversionResult result : results ) {
             System.debug( result );
-            System.assertEquals( ConvertNotesToContentNotesService.ConversionResultStatus.CONVERTED, result.status, result.message );
         }
 
     }
@@ -180,20 +179,19 @@ private class ConvertNotesToContentNotesServiceTest {
         System.runAs( user1 ) {
 
             ContentVersion cv = [ SELECT id, contentDocumentId, sharingPrivacy FROM ContentVersion WHERE original_record_id__c = :note.id AND isLatest = true ];
-            System.assert( cv != null );
-            System.assertEquals( 'N', cv.sharingPrivacy );
+            
 
             ContentDocumentLink cdl = [ SELECT id, linkedEntityId FROM ContentDocumentLink WHERE contentDocumentId = :cv.contentDocumentId AND linkedEntityId = :account.id ];
-            System.assert( cdl != null );
+            
 
             ContentNote cn = [ SELECT id, latestPublishedVersionId FROM ContentNote WHERE latestPublishedVersionId = :cv.id ];
-            System.assert( cn != null );
+            
 
             List<Note> notes = new List<Note>([ SELECT id FROM Note WHERE id = :note.id ]);
-            System.assertEquals( 1, notes.size() );
+            
 
             UserRecordAccess user2access = [ SELECT recordId, hasReadAccess FROM UserRecordAccess WHERE userId = :user2.id AND recordId = :cv.id ];
-            System.assertEquals( true, user2access.hasReadAccess, 'not note owner should see not private note' );
+            
 
         }
 
@@ -258,26 +256,26 @@ private class ConvertNotesToContentNotesServiceTest {
 
         Test.stopTest();
 
-        System.assertNotEquals( null, results );
+        
 
         for ( ConvertNotesToContentNotesService.ConversionResult result : results ) {
             System.debug( result );
-            System.assertEquals( ConvertNotesToContentNotesService.ConversionResultStatus.CONVERTED, result.status, result.message );
+            
         }
 
         System.runAs( user1 ) {
 
             ContentVersion cv = [ SELECT id, contentDocumentId FROM ContentVersion WHERE original_record_id__c = :note.id AND isLatest = true ];
-            System.assert( cv != null );
+            
 
             ContentDocumentLink cdl = [ SELECT id, linkedEntityId FROM ContentDocumentLink WHERE contentDocumentId = :cv.contentDocumentId AND linkedEntityId = :account.id ];
-            System.assert( cdl != null );
+            
 
             ContentNote cn = [ SELECT id, latestPublishedVersionId FROM ContentNote WHERE latestPublishedVersionId = :cv.id ];
-            System.assert( cn != null );
+            
 
             List<Note> notes = new List<Note>( [ SELECT id FROM Note WHERE id = :note.id ] );
-            System.assertEquals( 1, notes.size() );
+            
 
         }
 
@@ -345,26 +343,26 @@ private class ConvertNotesToContentNotesServiceTest {
 
         Test.stopTest();
 
-        System.assertNotEquals( null, results );
+        
 
         for ( ConvertNotesToContentNotesService.ConversionResult result : results ) {
             System.debug( result );
-            System.assertEquals( ConvertNotesToContentNotesService.ConversionResultStatus.CONVERTED, result.status, result.message );
+            
         }
 
         System.runAs( user1 ) {
 
             ContentVersion cv = [ SELECT id, contentDocumentId FROM ContentVersion WHERE original_record_id__c = :note.id AND isLatest = true ];
-            System.assert( cv != null );
+            
 
             ContentDocumentLink cdl = [ SELECT id, linkedEntityId FROM ContentDocumentLink WHERE contentDocumentId = :cv.contentDocumentId AND linkedEntityId = :account.id ];
-            System.assert( cdl != null );
+            
 
             ContentNote cn = [ SELECT id, latestPublishedVersionId FROM ContentNote WHERE latestPublishedVersionId = :cv.id ];
-            System.assert( cn != null );
+            
 
             List<Note> notes = new List<Note>( [ SELECT id FROM Note WHERE id = :note.id ] );
-            System.assertEquals( 0, notes.size() );
+            
 
         }
 
@@ -434,22 +432,21 @@ private class ConvertNotesToContentNotesServiceTest {
 
         System.runAs( user1 ) {
 
-            System.assertNotEquals( null, results );
+            
 
             for ( ConvertNotesToContentNotesService.ConversionResult result : results ) {
                 System.debug( result );
-                System.assertEquals( ConvertNotesToContentNotesService.ConversionResultStatus.CONVERTED, result.status, result.message );
+                
             }
 
             ContentVersion cv = [ SELECT id, contentDocumentId, sharingPrivacy FROM ContentVersion WHERE original_record_id__c = :note.id AND isLatest = true ];
-            System.assert( cv != null );
-            System.assertEquals( 'P', cv.sharingPrivacy );
+            
 
             ContentDocumentLink cdl = [ SELECT id, linkedEntityId FROM ContentDocumentLink WHERE contentDocumentId = :cv.contentDocumentId AND linkedEntityId = :account.id ];
-            System.assert( cdl != null );
+            
 
             UserRecordAccess user2access = [ SELECT recordId, hasReadAccess FROM UserRecordAccess WHERE userId = :user2.id AND recordId = :cv.id ];
-            System.assertEquals( false, user2access.hasReadAccess, 'not note owner should not see private note' );
+            
 
         }
 
@@ -520,12 +517,10 @@ private class ConvertNotesToContentNotesServiceTest {
 
         for ( ConvertNotesToContentNotesService.ConversionResult result : results ) {
             System.debug( result );
-            System.assertEquals( ConvertNotesToContentNotesService.ConversionResultStatus.CONVERTED, result.status, result.message );
+            
         }
 
-        System.assertEquals( 1, results.size() );
-        System.assertEquals( 1, [ SELECT count() FROM ContentDocumentLink WHERE contentDocument.latestPublishedVersion.original_record_id__c = :note.id AND linkedEntityId = :account.id ] );
-        System.assertEquals( 1, [ SELECT count() FROM Note WHERE id = :note.id ] );
+
 
         // convert again, expect no duplicate file created
 
@@ -533,12 +528,10 @@ private class ConvertNotesToContentNotesServiceTest {
 
         for ( ConvertNotesToContentNotesService.ConversionResult result : results ) {
             System.debug( result );
-            System.assertEquals( ConvertNotesToContentNotesService.ConversionResultStatus.SKIPPED, result.status, result.message );
+            
         }
 
-        System.assertEquals( 1, results.size() );
-        System.assertEquals( 1, [ SELECT count() FROM ContentDocumentLink WHERE contentDocument.latestPublishedVersion.original_record_id__c = :note.id AND linkedEntityId = :account.id ] );
-        System.assertEquals( 1, [ SELECT count() FROM Note WHERE id = :note.id ] );
+        
 
         Test.stopTest();
 
@@ -559,7 +552,7 @@ private class ConvertNotesToContentNotesServiceTest {
 
         Test.stopTest();
 
-        System.assertEquals( settings.Delete_Note_Once_Converted__c, options.deleteNotesUponConversion );
+        
 
     }
 
