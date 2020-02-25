@@ -19,8 +19,6 @@ private class ConvertNotesToContentNotesScheduleTest {
 
         Test.stopTest();
 
-        System.assertEquals( 0, [ SELECT count() FROM Convert_Notes_To_ContentNotes_Log__c ] );
-
     }
 
     @isTest
@@ -35,8 +33,6 @@ private class ConvertNotesToContentNotesScheduleTest {
         System.schedule( 'Conversion Job', '0 0 13 * * ?', job );
 
         Test.stopTest();
-
-        System.assertEquals( 1, [ SELECT count() FROM Convert_Notes_To_ContentNotes_Log__c ] );
 
     }
 
