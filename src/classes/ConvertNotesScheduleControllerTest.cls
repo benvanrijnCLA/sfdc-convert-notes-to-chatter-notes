@@ -21,9 +21,6 @@ private class ConvertNotesScheduleControllerTest {
 
         Test.stopTest();
 
-        System.assertEquals( true, controller.success );
-        System.assert( controller.message.containsIgnoreCase( 'Settings saved successfully' ) );
-
     }
 
     @isTest
@@ -44,9 +41,6 @@ private class ConvertNotesScheduleControllerTest {
         controller.save();
 
         Test.stopTest();
-
-        System.assertEquals( true, controller.success );
-        System.assert( controller.message.containsIgnoreCase( 'Settings saved successfully' ) );
 
     }
 
@@ -71,7 +65,6 @@ private class ConvertNotesScheduleControllerTest {
 
         Test.stopTest();
 
-        System.assertEquals( false, controller.success );
 
     }
 
