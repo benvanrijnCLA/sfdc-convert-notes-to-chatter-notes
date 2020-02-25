@@ -219,39 +219,6 @@ private class ConvertNotesToContentNotesBatchableTest {
             System.debug( log );
         }
 
-        ContentDocumentLink cdl_note1 = [
-            SELECT
-                id,
-                contentDocument.fileType,
-                contentDocumentId,
-                contentDocument.latestPublishedVersion.original_record_id__c,
-                contentDocument.latestPublishedVersion.original_record_parent_id__c,
-                contentDocument.latestPublishedVersion.original_record_owner_id__c
-            FROM
-                ContentDocumentLink
-            WHERE
-                linkedEntityId = :acct.id
-                AND
-                contentDocument.latestPublishedVersion.original_record_id__c = :note1.id
-        ];
-
-
-        ContentDocumentLink cdl_note2 = [
-            SELECT
-                id,
-                contentDocumentId,
-                contentDocument.fileType,
-                contentDocument.latestPublishedVersion.original_record_id__c,
-                contentDocument.latestPublishedVersion.original_record_parent_id__c,
-                contentDocument.latestPublishedVersion.original_record_owner_id__c
-            FROM
-                ContentDocumentLink
-            WHERE
-                linkedEntityId = :acct.id
-                AND
-                contentDocument.latestPublishedVersion.original_record_id__c = :note2.id
-        ];
-
 
 
     }
