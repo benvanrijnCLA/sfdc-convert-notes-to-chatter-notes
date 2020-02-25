@@ -15,9 +15,6 @@ private class ConvertNotesInstallHandlerTest {
 
         Convert_Notes_to_ContentNotes_Settings__c settings = Convert_Notes_to_ContentNotes_Settings__c.getOrgDefaults();
 
-        System.assert( String.isNotBlank( settings.id ), 'id should not be blank' );
-        System.assertEquals( false, settings.Convert_in_Near_Real_Time__c );
-        System.assertEquals( false, settings.Delete_Note_Once_Converted__c );
 
     }
 
@@ -38,9 +35,6 @@ private class ConvertNotesInstallHandlerTest {
 
         Convert_Notes_to_ContentNotes_Settings__c postSettings = Convert_Notes_to_ContentNotes_Settings__c.getOrgDefaults();
 
-        System.assertEquals( preSettings.id, postSettings.id );
-        System.assertEquals( preSettings.Convert_in_Near_Real_Time__c, postSettings.Convert_in_Near_Real_Time__c );
-        System.assertEquals( preSettings.Delete_Note_Once_Converted__c, postSettings.Delete_Note_Once_Converted__c );
 
     }
 
